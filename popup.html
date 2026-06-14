@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VPN Route Collector</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+<div class="app">
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">VPN Route Collector</span>
+    </div>
+    <div class="rec-indicator" id="recIndicator">
+      <span class="dot"></span>
+      <span id="recLabel">СТОП</span>
+    </div>
+  </header>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-val" id="domainsCount">0</div>
+      <div class="stat-lbl">доменов</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" id="ipsCount">0</div>
+      <div class="stat-lbl">IP адресов</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" id="sessionTime">—</div>
+      <div class="stat-lbl">сессия</div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button id="btnToggle" class="btn btn-primary">▶ Начать запись</button>
+    <button id="btnClear" class="btn btn-ghost">Очистить</button>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" data-tab="domains">Домены</button>
+    <button class="tab" data-tab="ips">IP</button>
+    <button class="tab" data-tab="export">Экспорт</button>
+  </div>
+
+  <!-- Tab: Domains -->
+  <div class="tab-content active" id="tab-domains">
+    <div class="search-row">
+      <input type="text" id="searchDomains" placeholder="Поиск домена..." class="search-input">
+    </div>
+    <div class="list" id="domainsList">
+      <div class="empty">Нет данных. Начните запись.</div>
+    </div>
+  </div>
+
+  <!-- Tab: IPs -->
+  <div class="tab-content" id="tab-ips">
+    <div class="search-row">
+      <input type="text" id="searchIPs" placeholder="Поиск IP..." class="search-input">
+    </div>
+    <div class="list" id="ipsList">
+      <div class="empty">Нет данных.</div>
+    </div>
+  </div>
+
+  <!-- Tab: Export -->
+  <div class="tab-content" id="tab-export">
+    <div class="export-section">
+      <div class="export-group-label">Фильтры</div>
+      <label class="checkbox-row">
+        <input type="checkbox" id="filterPrivate" checked>
+        Исключить приватные IP
+      </label>
+      <label class="checkbox-row">
+        <input type="checkbox" id="filterGoogle">
+        Исключить Google / CDN
+      </label>
+      <label class="checkbox-row">
+        <input type="checkbox" id="onlyIPs">
+        Только IP (без доменов)
+      </label>
+    </div>
+
+    <div class="export-group-label">Формат экспорта</div>
+    <div class="export-buttons">
+      <button class="btn btn-export" data-fmt="plain-domains">Домены.txt</button>
+      <button class="btn btn-export" data-fmt="plain-ips">IP.txt</button>
+      <button class="btn btn-export" data-fmt="cidr">CIDR /32</button>
+      <button class="btn btn-export" data-fmt="wireguard">WireGuard</button>
+      <button class="btn btn-export" data-fmt="openvpn">OpenVPN</button>
+      <button class="btn btn-export" data-fmt="mikrotik">MikroTik</button>
+      <button class="btn btn-export" data-fmt="json">JSON</button>
+      <button class="btn btn-export" data-fmt="pac">PAC файл</button>
+      <button class="btn btn-export btn-amnezia" data-fmt="amnezia">AmneziaVPN</button>
+    </div>
+
+    <div class="preview-label">Предпросмотр <span id="previewCount"></span></div>
+    <textarea id="exportPreview" readonly placeholder="Выберите формат для предпросмотра..."></textarea>
+    <button class="btn btn-primary" id="btnCopy">Скопировать</button>
+    <button class="btn btn-outline" id="btnDownload">Скачать файл</button>
+  </div>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>
